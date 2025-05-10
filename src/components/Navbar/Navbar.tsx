@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Menu, X, LogOut, Settings, User } from "lucide-react";
 import NavLink from "@/components/Navbar/Navlink";
 import MobileNavLink from "./MobileNavLink";
-import AccountDropdown from "./AccountDropDown";
+import AccountDropdown from "./AccountDropdown";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
