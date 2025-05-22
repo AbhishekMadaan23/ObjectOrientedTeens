@@ -11,13 +11,23 @@ const Navbar = () => {
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
+    const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10); // toggle after 10px scroll
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
-    { href: "#", label: "Home" },
-    { href: "#", label: "About" },
-    { href: "#", label: "Services" },
-    { href: "#", label: "Contact" },
-    { href: "#", label: "Blog" },
+    {  id: 1, href: "#", label: "Home" },
+    {  id: 2, href: "#", label: "About" },
+    {  id: 3, href: "#", label: "Services" },
+    {  id: 4, href: "#", label: "Contact" },
+    {  id: 5, href: "#", label: "Blog" },
   ];
 
   const accountItems = [
@@ -52,8 +62,11 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="flex justify-between items-center px-4 sm:px-8 py-3  text-white shadow-lg border-b border-gray-900 sticky top-0 z-50">
-      {/* Logo */}
+  <nav
+      className={`flex justify-between items-center px-4 sm:px-8 py-3 text-white shadow-lg border-b border-gray-900 sticky top-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-[#0a122ab3] backdrop-blur-md" : "bg-transparent"
+      }`}
+    >      {/* Logo */}
       <div className="flex items-center space-x-2">
         <div className="relative w-12 h-12 sm:w-16 sm:h-16 hover:scale-105 transition-transform duration-200">
           <Image
@@ -72,7 +85,7 @@ const Navbar = () => {
       {/* Desktop Navigation */}
       <div className="hidden sm:flex gap-6 items-center">
         {navLinks.map((link) => (
-          <NavLink key={link.href} href={link.href}>
+          <NavLink key={link.id} href={link.href}>
             {link.label}
           </NavLink>
         ))}
@@ -113,7 +126,7 @@ const Navbar = () => {
           <div className="flex flex-col py-2">
             {navLinks.map((link) => (
               <MobileNavLink 
-                key={link.href} 
+                key={link.id} 
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
